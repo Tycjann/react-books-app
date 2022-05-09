@@ -1,4 +1,13 @@
-const BookList = ({ books, removeBook}) => {
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+const BookList = () => {
+  const books = useSelector(state => state.books);
+  const dispatch = useDispatch();
+
+  const removeBook = bookId => {
+    dispatch({ type: 'REMOVE_BOOK', payload: bookId })
+  };
 
   return (
     <ul>
