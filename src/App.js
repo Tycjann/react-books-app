@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import BookForm from "./components/BookForm/BookForm";
+import BookList from "./components/BooksList/BooksList";
+import { nanoid } from 'nanoid';
 
-function App() {
+const App = () => {
+  
+  const [books, setBooks] = useState([
+    {id: 1, title: 'Krzyżacy', author: 'Henryk Sieńkiewicz'},
+    {id: 2, title: 'Pan Tadeusz', author: 'Adam Mickiewicz'},
+  ])
+
+  const removeBook = bookId => {
+    setBooks(books.filter(book => book.id !== bookId));
+  };
+
+  const addBook = newBook => {
+    setBooks([...books, { id: nanoid(), title: newBook.title, author: newBook.author}]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Books App</h1>
+      <BookList books={books} removeBook={removeBook} />
+      <BookForm addBook={addBook} />
     </div>
   );
 }
